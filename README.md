@@ -44,7 +44,7 @@ docker exec -it nvidia/cuda:11.3.0-cudnn8-devel-ubuntu20.04 /bin/bash
 
 
 ## Git useful commands
-```
+```bash
 # Set global config
 git config --global -l # list config
 git config --global user.name "First Last"
