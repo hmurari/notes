@@ -109,4 +109,8 @@ get bfg repo cleaner from https://rtyley.github.io/bfg-repo-cleaner/
 bfg --strip-blobs-bigger-than 2M --replace-text banned.txt repo.git
 git reflog expire --expire=now --all && git --prune=now --aggressive
 git push --force  # in github, unprotect branch before this.
+
+# Get latest tag
+git ls-remote --refs --tags $GIT_REPO  # from remote, pushed tags
+git describe                           # locally available tag, or a uuid
 ```
