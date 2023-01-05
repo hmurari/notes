@@ -114,3 +114,21 @@ git push --force  # in github, unprotect branch before this.
 git ls-remote --refs --tags $GIT_REPO  # from remote, pushed tags
 git describe                           # locally available tag, or a uuid
 ```
+
+## Python
+
+### Avoid import error (python run.py or python module/run.py)
+```python
+# Add this to the top of file to avoid module import errors 
+# (when the directory where we are running is different)
+
+import sys
+from pathlib import Path
+
+FILE = Path(__file__).resolve()
+ROOT = FILE.parents[0]  # Root directory
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))  # add ROOT to PATH
+ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
+```
+
