@@ -1,6 +1,18 @@
 # Notes
 Notes for various useful stuff
 
+## Shell useful commands
+```bash
+# Search for a specific pattern of file recursively & delete it.
+find . -name "*.pyc" -exec rm {} \;
+
+# Search for something only in text files
+find . -name "*.txt" -exec grep "hello world" {} \;  
+
+# Seach for something in txt files, also print filename
+grep -R "hello world" * | grep ".txt"  
+```
+
 
 ## Azure IoTEdge Commands
 ```bash
