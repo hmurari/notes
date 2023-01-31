@@ -144,5 +144,48 @@ if str(ROOT) not in sys.path:
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 ```
 
+### Python Docker SDK (docker-py)
+```python
+# pip install docker
+# provides easy methods to start/stop containers & access their status
+import docker
+client = docker.from_env()
+
+# docker ps
+ctainers = client.containers.list()
+
+# find container by image name
+def get_container_by_image_name(image_name):
+    for ctainer in client.containers.list():
+        if image_name.lower() in ctainer.attrs['Config']['Image']:
+            return ctainer
+    return None
+     
+# Stop a running container
+image_name = 'nvcr.io/nvidia/tritonserver:22.12-py3'
+ctainer = find_container_by_image_name(image_name)
+ctainer.stop()
+
+# Start a container
+image_name = 'nvcr.io/nvidia/tritonserver:22.12-py3'
+command = 'tritonserver --models-repo /models'
+volumes = [{"/workspace/models-repo:/models:rw"}]
+device_requests = [ docker.types.DeviceRequest(capabilities=[['gpu']]) ]
+client.containers.run(
+    image=image_name,               # image name
+    command=command,                # command to run in container
+    stdout=False,                   # disable logs
+    stderr=False,                   # disable stderr logs
+    detach=True,                    # detached mode - daemon
+    remove=True,                    # remove fs after exit
+    auto_remove=True,               # remove fs if container fails
+    runtime='nvidia',               # Use nvidia-container-runtime
+    device_requests=device_requests,# --gpus=all
+    network_mode='host',            # --net=host
+    volumes=volumes                 # -v (mount volumes)
+)
+
+```
+
 ### Python specify types
 [Python Type Hints Cheat Sheet](https://mypy.readthedocs.io/en/latest/cheat_sheet_py3.html)
