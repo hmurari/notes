@@ -52,6 +52,10 @@ docker run -it --privileged --gpus=all --ipc host --network host -p 554:554 nvid
 # Docker shell on running container
 docker exec -it nvidia/cuda:11.3.0-cudnn8-devel-ubuntu20.04 /bin/bash
 
+# Stop & remove all docker containers
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+
 ```
 
 
